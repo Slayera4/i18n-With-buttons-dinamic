@@ -13,21 +13,27 @@ import { IntlProvider } from 'react-intl';
     messages: spanishMessages.messages
 };
 
-if(localStorage["lang"]==="es"){i18nConfig.messages = englishMessages.messages}
+
+
 class App extends Component {
 
+componentWillMount(){
 
-
-
+    switch (localStorage["lang"]) {
+              case 'es': i18nConfig.messages = spanishMessages.messages; break;
+              case 'en': i18nConfig.messages = englishMessages.messages; break;
+              default: i18nConfig.messages = spanishMessages.messages; break;
+          }
+}
 onChangeLanguage(lang){
         switch (lang) {
-            case 'es': i18nConfig.messages = spanishMessages.messages; break;
-            case 'en': i18nConfig.messages = englishMessages.messages; break;
+            case 'es': i18nConfig.messages = spanishMessages.messages; localStorage.setItem("lang", "es" ); break;
+            case 'en': i18nConfig.messages = englishMessages.messages; localStorage.setItem("lang", "en" ); break;
             default: i18nConfig.messages = spanishMessages.messages; break;
         }
         this.setState({ locale: lang });
         i18nConfig.locale = lang;
-       console.log(i18nConfig.locale)
+        console.log(localStorage["lang"])
 }
 
   render() {
