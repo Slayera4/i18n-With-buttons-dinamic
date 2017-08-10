@@ -13,8 +13,8 @@ addLocaleData(es);
 
 /* Define your translations */
 
-
-/*
+if(navigator.language==="es"){localStorage.setItem("lang", "es" )}
+else{localStorage.setItem("lang", "en" )}/*
   Enable react-intl in your project, initializing it with your locale
   and translations.
 

@@ -8,11 +8,12 @@ import englishMessages from './languages/en'
 import { IntlProvider } from 'react-intl';
 
 
-
  let i18nConfig = {
     locale: spanishMessages.locale,
     messages: spanishMessages.messages
 };
+
+if(localStorage["lang"]==="es"){i18nConfig.messages = englishMessages.messages}
 class App extends Component {
 
 
@@ -31,7 +32,7 @@ onChangeLanguage(lang){
 
   render() {
     return (
-    <IntlProvider locale={i18nConfig.locale} messages={i18nConfig.messages}>
+    <IntlProvider locale={localStorage["lang"]} messages={i18nConfig.messages}>
       <div className="App">
         <div className="App-header">
           <button onClick={()=>this.onChangeLanguage('es')}><FormattedMessage id="app.buttonEs"/></button>
