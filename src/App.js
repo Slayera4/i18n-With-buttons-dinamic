@@ -2,43 +2,56 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { FormattedMessage } from 'react-intl';
+import {connect} from 'react-redux';
+
 //import {connect} from 'react-redux'
-import spanishMessages from './languages/es'
-import englishMessages from './languages/en'
-import { IntlProvider } from 'react-intl';
 
 
- let i18nConfig = {
+/* let i18nConfig = {
     locale: spanishMessages.locale,
     messages: spanishMessages.messages
-};
+};*/
 
 
 
 class App extends Component {
 
 componentWillMount(){
-
+/*
     switch (localStorage["lang"]) {
-              case 'es': i18nConfig.messages = spanishMessages.messages; break;
-              case 'en': i18nConfig.messages = englishMessages.messages; break;
-              default: i18nConfig.messages = spanishMessages.messages; break;
-          }
+              case 'es': this.props.dispatch({type:"es"}); break;
+              case 'en': this.props.dispatch({type:"en"});break;
+              default: this.props.dispatch({type:"en"}); break;
+          }*/
+
 }
 onChangeLanguage(lang){
-        switch (lang) {
+       /* switch (lang) {
             case 'es': i18nConfig.messages = spanishMessages.messages; localStorage.setItem("lang", "es" ); break;
             case 'en': i18nConfig.messages = englishMessages.messages; localStorage.setItem("lang", "en" ); break;
             default: i18nConfig.messages = spanishMessages.messages; break;
         }
-        this.setState({ locale: lang });
-        i18nConfig.locale = lang;
-        console.log(localStorage["lang"])
+        this.setState({  });
+        i18nConfig.locale = lang;*/
+        if(lang==="es"){
+          this.props.dispatch({type:"es"})
+          localStorage.setItem("lang", "es" );
+        }
+        else if(lang==="en"){
+          this.props.dispatch({type:"en"})
+          localStorage.setItem("lang", "en" );
+        }
+        console.log(this.props.i18n.messages)
+        console.log(this.props.i18n.locale)
+        console.log(localStorage["lang"])        
 }
+    /*  onChange(lang){
+        this.onChangeLanguage(lang)
+        this.props.app()
+      }*/
 
   render() {
     return (
-    <IntlProvider locale={localStorage["lang"]} messages={i18nConfig.messages}>
       <div className="App">
         <div className="App-header">
           <button onClick={()=>this.onChangeLanguage('es')}><FormattedMessage id="app.buttonEs"/></button>
@@ -50,9 +63,8 @@ onChangeLanguage(lang){
           <FormattedMessage id={"app.greeting_message1"} /><code><FormattedMessage id="app.aaa"/></code><FormattedMessage id="app.greeting_message2"/>
         </p>
       </div>
-      </IntlProvider>
     );
   }
 }
 
-export default (App);
+export default connect(({i18n})=>({i18n}))(App);
