@@ -53,6 +53,11 @@ import {ChangeToEsMessages, ChangeToEnMessages} from './Actions/messages'
     
     
   }
+
+  const mapStateToProps = state => ({
+    locale: state.locale,
+    messages: state.messages
+  });
           
 class App extends Component {
 
@@ -66,7 +71,8 @@ componentWillMount(){
 
 }
 onChangeLanguage(lang){
-          this.props.changeLanguage(lang);  
+          this.props.changeLanguage(lang); 
+          this.props.locale 
 
        /* switch (lang) {
             case 'es': i18nConfig.messages = spanishMessages.messages; localStorage.setItem("lang", "es" ); break;
@@ -83,7 +89,7 @@ onChangeLanguage(lang){
 
   render() {
     return (
-      <div className="App">
+      <div className= "App">
         <div className="App-header">
           <button onClick={()=>this.onChangeLanguage('es')}><FormattedMessage id="app.buttonEs"/></button>
           <button onClick={()=>this.onChangeLanguage('en')}><FormattedMessage id="app.buttonEn"/></button>
@@ -98,4 +104,4 @@ onChangeLanguage(lang){
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

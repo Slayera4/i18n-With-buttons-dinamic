@@ -69,15 +69,10 @@ addLocaleData(es);
         return spanishMessages.locale
         case CL.SetLocaleEn:
         return englishMessages.locale
-        default: return state
+        default: return  state
     }
 
 }
-
-
-
-
-
 export default function messages(state={...englishMessages.messages},action={}){
     if(localStorage["lang"]==="en"){
       state=englishMessages.messages
