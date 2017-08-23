@@ -3,6 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import { FormattedMessage } from 'react-intl';
 import {connect} from 'react-redux';
+import {ChangeToEsLocale, ChangeToEnLocale} from './Actions/locale'
+import {ChangeToEsMessages, ChangeToEnMessages} from './Actions/messages'
+
 
 //import {connect} from 'react-redux'
 
@@ -14,6 +17,43 @@ import {connect} from 'react-redux';
 
 
 
+  function mapDispatchToProps(dispatch, ownProps) {
+        /*
+    return {ChangeMessages(lang){
+      if (lang==="en"){
+                console.log("Español")
+
+        dispatch(ChangeToEnMessages())
+                          }
+          else if(lang==="es"){
+          dispatch(ChangeToEsMessages())
+                                }
+    },
+        ChangeLocale(lang){
+                if (lang==="en"){
+        dispatch(ChangeToEnLocale())
+                          }
+          else if(lang==="es"){
+          dispatch(ChangeToEsLocale())
+                                }
+        }                          
+  }*/
+  return {
+    changeLanguage(lang) {
+        localStorage.setItem("lang", lang)
+      if (lang === "en") {
+        dispatch(ChangeToEnMessages());
+        dispatch(ChangeToEnLocale());
+      } else {
+        dispatch(ChangeToEsLocale());
+        dispatch(ChangeToEsMessages());
+      }
+    }
+  }
+    
+    
+  }
+          
 class App extends Component {
 
 componentWillMount(){
@@ -26,6 +66,8 @@ componentWillMount(){
 
 }
 onChangeLanguage(lang){
+          this.props.changeLanguage(lang);  
+
        /* switch (lang) {
             case 'es': i18nConfig.messages = spanishMessages.messages; localStorage.setItem("lang", "es" ); break;
             case 'en': i18nConfig.messages = englishMessages.messages; localStorage.setItem("lang", "en" ); break;
@@ -33,17 +75,6 @@ onChangeLanguage(lang){
         }
         this.setState({  });
         i18nConfig.locale = lang;*/
-        if(lang==="es"){
-          this.props.dispatch({type:"es"})
-          localStorage.setItem("lang", "es" );
-        }
-        else if(lang==="en"){
-          this.props.dispatch({type:"en"})
-          localStorage.setItem("lang", "en" );
-        }
-        console.log(this.props.i18n.messages)
-        console.log(this.props.i18n.locale)
-        console.log(localStorage["lang"])        
 }
     /*  onChange(lang){
         this.onChangeLanguage(lang)
@@ -67,4 +98,4 @@ onChangeLanguage(lang){
   }
 }
 
-export default connect(({i18n})=>({i18n}))(App);
+export default connect(null, mapDispatchToProps)(App);
